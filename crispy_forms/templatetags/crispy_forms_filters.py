@@ -55,7 +55,10 @@ def as_crispy_form(form, template_pack=TEMPLATE_PACK, label_class="", field_clas
         }
     ).flatten()
     if isinstance(form, BaseFormSet):
-        template = uni_formset_template(template_pack)
+        if (hasattr(form, 'template')):
+            template = get_template(form.template)
+        else:        
+            template = uni_formset_template(template_pack)
         c["formset"] = form
     else:
         template = uni_form_template(template_pack)
